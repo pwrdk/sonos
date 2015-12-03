@@ -3,6 +3,10 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+### Changed
+
+* [Support] Drop support for PHP 5.6, to make use of new PHP 7.0 features.
+
 --------
 
 ## 1.9.8 - 2017-02-22

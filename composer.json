@@ -20,11 +20,11 @@
         "psr/log": "1.0.0",
         "ext-soap": "*",
         "ext-sockets": "*",
-        "php": "^5.6|^7.0"
+        "php": "^7.0"
     },
     "require-dev": {
         "duncan3dc/object-intruder": "^0.1.0",
-        "mockery/mockery": "^0.9.4",
+        "mockery/mockery": "1.0.x-dev",
         "phpunit/phpunit": "^5.7.14"
     },
     "autoload": {

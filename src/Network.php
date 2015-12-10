@@ -3,7 +3,11 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Devices\Discovery;
+use duncan3dc\Sonos\Devices\Factory;
+use duncan3dc\Sonos\Interfaces\DeviceCollectionInterface;
 use duncan3dc\Sonos\Services\Radio;
+use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -13,7 +17,7 @@ use Psr\Log\LoggerInterface;
 class Network implements LoggerAwareInterface
 {
     /**
-     * @var DeviceCollection $collection The collection of devices on the network.
+     * @var DeviceCollectionInterface $collection The collection of devices on the network.
      */
     protected $collection;
 
@@ -31,12 +35,12 @@ class Network implements LoggerAwareInterface
     /**
      * Create a new instance.
      *
-     * @param DeviceCollection $collection The collection of devices on this network
+     * @param DeviceCollectionInterface $collection The collection of devices on this network
      */
-    public function __construct(DeviceCollection $collection = null)
+    public function __construct(DeviceCollectionInterface $collection = null)
     {
         if ($collection === null) {
-            $collection = new DeviceCollection;
+            $collection = new Discovery(new Factory);
         }
         $this->collection = $collection;
     }
@@ -51,6 +55,7 @@ class Network implements LoggerAwareInterface
      */
     public function setLogger(LoggerInterface $logger)
     {
+
         $this->collection->setLogger($logger);
 
         return $this;
@@ -75,7 +80,48 @@ class Network implements LoggerAwareInterface
      */
     public function getSpeakers(): array
     {
-        return $this->collection->getSpeakers();
+        if (is_array($this->speakers)) {
+            return $this->speakers;
+        }
+
+        $devices = $this->collection->getDevices();
+        if (count($devices) < 1) {
+            throw new \RuntimeException("No devices in this collection");
+        }
+
+        $this->getLogger()->info("creating speaker instances");
+
+        # Get the topology information from 1 speaker
+        $topology = [];
+        $ip = reset($devices)->ip;
+        $uri = "http://{$ip}:1400/status/topology";
+        $this->getLogger()->notice("Getting topology info from: {$uri}");
+        $xml = (string) (new Client)->get($uri)->getBody();
+        $players = (new XmlParser($xml))->getTag("ZonePlayers")->getTags("ZonePlayer");
+        foreach ($players as $player) {
+            $attributes = $player->getAttributes();
+            $ip = parse_url($attributes["location"])["host"];
+            $topology[$ip] = $attributes;
+        }
+
+        $this->speakers = [];
+        foreach ($devices as $device) {
+            if (!$device->isSpeaker()) {
+                continue;
+            }
+
+            $speaker = new Speaker($device);
+
+            if (!isset($topology[$device->ip])) {
+                throw new \RuntimeException("Failed to lookup the topology info for this speaker");
+            }
+
+            $speaker->setTopology($topology[$device->ip]);
+
+            $this->speakers[$device->ip] = $speaker;
+        }
+
+        return $this->speakers;
     }
 
 

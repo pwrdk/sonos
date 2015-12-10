@@ -1,17 +1,20 @@
 <?php
 
-namespace duncan3dc\SonosTests;
+namespace duncan3dc\SonosTests\Devices;
 
-use duncan3dc\Sonos\DeviceCollection;
+use duncan3dc\Sonos\Devices\Discovery;
+use duncan3dc\Sonos\Devices\Factory;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
-class DeviceCollectionTest extends TestCase
+class DiscoveryTest extends TestCase
 {
     private $devices;
 
     public function setUp()
     {
-        $this->devices = new DeviceCollection;
+        $factory = Mockery::mock(Factory::class);
+        $this->devices = new Discovery($factory);
     }
 
 

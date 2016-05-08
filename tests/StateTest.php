@@ -12,7 +12,7 @@ class StateTest extends TrackTest
     public function setUp()
     {
         $controller = Mockery::mock("duncan3dc\Sonos\Controller");
-        $controller->ip = "192.168.0.66";
+        $controller->shouldReceive("getIp")->andReturn("192.168.0.66");
 
         $xml = new XmlParser($this->xml1);
         $this->track1 = State::createFromXml($xml->getTag("track"), $controller);

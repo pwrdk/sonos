@@ -136,7 +136,7 @@ class Playlist extends Queue
      *
      * @return $this
      */
-    public function moveTrack(int $from, int $to): QueueInterface
+    public function moveTrack(int $from, int $to): PlaylistInterface
     {
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),

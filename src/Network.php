@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Devices\Discovery;
 use duncan3dc\Sonos\Devices\Factory;
+use duncan3dc\Sonos\Interfaces\AlarmInterface;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\DeviceCollectionInterface;
 use duncan3dc\Sonos\Interfaces\PlaylistInterface;
@@ -30,7 +31,7 @@ class Network implements LoggerAwareInterface
     protected $playlists;
 
     /**
-     * @var Alarm[]|null $alarms Alarms that are available on the current network.
+     * @var AlarmInterface[]|null $alarms Alarms that are available on the current network.
      */
     protected $alarms;
 
@@ -405,7 +406,7 @@ class Network implements LoggerAwareInterface
     /**
      * Get all the alarms available on the network.
      *
-     * @return Alarm[]
+     * @return AlarmInterface[]
      */
     public function getAlarms(): array
     {
@@ -430,9 +431,9 @@ class Network implements LoggerAwareInterface
      *
      * @param int $id The ID of the alarm
      *
-     * @return Alarm|null
+     * @return AlarmInterface|null
      */
-    public function getAlarmById(int $id): Alarm
+    public function getAlarmById(int $id): AlarmInterface
     {
         $id = (int) $id;
 

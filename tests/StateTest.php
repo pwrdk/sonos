@@ -20,10 +20,4 @@ class StateTest extends TrackTest
         $xml = new XmlParser($this->xml2);
         $this->track2 = State::createFromXml($xml->getTag("track"), $controller);
     }
-
-
-    public function testTrackNumber()
-    {
-        $this->assertSame(3, $this->track1->trackNumber);
-    }
 }

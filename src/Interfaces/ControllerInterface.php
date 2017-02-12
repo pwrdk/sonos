@@ -3,10 +3,10 @@
 namespace duncan3dc\Sonos\Interfaces;
 
 use duncan3dc\Sonos\ControllerState;
+use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\StateInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
-use duncan3dc\Sonos\Network;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
 
@@ -338,5 +338,5 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @return NetworkInterface
      */
-    public function getNetwork(): Network;
+    public function getNetwork(): NetworkInterface;
 }

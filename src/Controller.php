@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\StateInterface;
@@ -20,7 +21,7 @@ use duncan3dc\Sonos\Utils\Time;
 class Controller extends Speaker implements ControllerInterface
 {
     /**
-     * @var Network $network The network instance this Controller is part of.
+     * @var NetworkInterface $network The network instance this Controller is part of.
      */
     protected $network;
 
@@ -32,7 +33,7 @@ class Controller extends Speaker implements ControllerInterface
      *
      * @param SpeakerInterface $speaker
      */
-    public function __construct(SpeakerInterface $speaker, Network $network)
+    public function __construct(SpeakerInterface $speaker, NetworkInterface $network)
     {
         if (!$speaker->isCoordinator()) {
             throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
@@ -756,9 +757,9 @@ class Controller extends Speaker implements ControllerInterface
     /**
      * Get the network instance used by this controller.
      *
-     * @return Network
+     * @return NetworkInterface
      */
-    public function getNetwork(): Network
+    public function getNetwork(): NetworkInterface
     {
         return $this->network;
     }

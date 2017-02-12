@@ -54,56 +54,56 @@ XML;
     public function testGetTrackMetaDataTitle()
     {
         $value = "TITLE";
-        $this->assertSame($value, $this->track1->title);
+        $this->assertSame($value, $this->track1->getTitle());
     }
 
 
     public function testGetTrackMetaDataArtist()
     {
         $value = "ARTIST";
-        $this->assertSame($value, $this->track1->artist);
+        $this->assertSame($value, $this->track1->getArtist());
     }
 
 
     public function testGetTrackMetaDataAlbum()
     {
         $value = "ALBUM";
-        $this->assertSame($value, $this->track1->album);
+        $this->assertSame($value, $this->track1->getAlbum());
     }
 
 
     public function testGetTrackMetaDataNumber()
     {
         $value = 3;
-        $this->assertSame($value, $this->track1->number);
+        $this->assertSame($value, $this->track1->getNumber());
     }
 
 
     public function testGetTrackMetaDataStreamTitle()
     {
         $value = "Of Matter - Proxy";
-        $this->assertSame($value, $this->track2->title);
+        $this->assertSame($value, $this->track2->getTitle());
     }
 
 
     public function testGetTrackMetaDataStreamArtist()
     {
         $value = "Tesseract";
-        $this->assertSame($value, $this->track2->artist);
+        $this->assertSame($value, $this->track2->getArtist());
     }
 
 
     public function testGetTrackMetaDataStreamAlbum()
     {
         $value = "";
-        $this->assertSame($value, $this->track2->album);
+        $this->assertSame($value, $this->track2->getAlbum());
     }
 
 
     public function testGetTrackMetaDataStreamNumber()
     {
         $value = 0;
-        $this->assertSame($value, $this->track2->number);
+        $this->assertSame($value, $this->track2->getNumber());
     }
 
 

@@ -5,8 +5,9 @@ namespace duncan3dc\SonosTests\Tracks;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Tracks\Track;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 
-class TrackTest extends \PHPUnit_Framework_TestCase
+class TrackTest extends TestCase
 {
     protected $xml1 = <<<XML
             <track>
